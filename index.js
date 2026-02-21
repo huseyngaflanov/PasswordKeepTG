@@ -82,13 +82,13 @@ bot.command("list", (ctx) => {
     
     let message = `📋 Your saved passwords (${passwords.length}):\n\n`;
     passwords.forEach((p, index) => {
-        message += `${index + 1}. ${p.name}\n`;
-        message += `   Login: ${p.login}\n`;
-        message += `   ID: ${p.id}\n\n`;
+        message += `${index + 1}.\n Name: *${p.name}* \n`;
+        message += `   Login: \`${p.login}\` \n`;
+        message += `   ID: \`${p.id}\` \n\n`;
     });
     message += `\nUse /get <id> to view a password\nUse /search <query> to search`;
     
-    ctx.reply(message);
+    ctx.reply(message, { parse_mode: "MarkdownV2" });
 });
 
 // Get a specific password by ID
@@ -109,11 +109,12 @@ bot.command("get", (ctx) => {
     }
     
     ctx.reply(
-        `🔐 ${password.name}\n\n` +
-        `Login: ${password.login}\n` +
+        `🔐 *${password.name}*\n\n` +
+        `Login: \`${password.login}\` \n` +
         `Password: ||${password.password}||\n` +
-        `ID: ${password.id}\n\n` +
-        `Created: ${new Date(password.createdAt).toLocaleString()}`
+        `ID: \`${password.id}\` \n\n` +
+        `Created: ${new Date(password.createdAt).toLocaleString()}`,
+        { parse_mode: "MarkdownV2" }
     ).then(msg => {
         // Auto-delete after 30 seconds
         setTimeout(() => {
@@ -128,7 +129,7 @@ bot.command("search", (ctx) => {
     const query = ctx.match?.trim();
     
     if (!query) {
-        ctx.reply("❌ Usage: /search <query>\n\nExample: /search gmail");
+        ctx.reply("❌ Usage: \` /search <query>\` \n\nExample: /search gmail");
         return;
     }
     
@@ -139,15 +140,15 @@ bot.command("search", (ctx) => {
         return;
     }
     
-    let message = `🔍 Found ${results.length} password(s) for "${query}":\n\n`;
+    let message = `🔍 Found ${results.length} password\\(s\\) for "${query}":\n\n`;
     results.forEach((p, index) => {
-        message += `${index + 1}. ${p.name}\n`;
-        message += `   Login: ${p.login}\n`;
-        message += `   ID: ${p.id}\n\n`;
+        message += `${index + 1}\\. Name: *${p.name}*\n`;
+        message += `   Login: \`${p.login}\`\n`;
+        message += `   ID: \`${p.id}\` \n\n`;
     });
-    message += `\nUse /get <id> to view a password`;
+    message += `\nUse /get \\<id\\> to view a password`;
     
-    ctx.reply(message);
+    ctx.reply(message, { parse_mode: "MarkdownV2" });
 });
 
 // Delete a password
