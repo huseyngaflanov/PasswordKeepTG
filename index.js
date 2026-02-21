@@ -42,6 +42,7 @@ bot.command("start", (ctx) => {
     }
 });
 
+
 bot.on("message", async (ctx) => {
     if (!ctx.session.requestingMaterPassword) return; // ignore normal messages
 
