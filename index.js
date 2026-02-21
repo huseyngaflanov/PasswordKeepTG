@@ -40,8 +40,6 @@ bot.command("start", (ctx) => {
             ctx.reply("Please create a master password (exactly 8 characters).");
         }
     }
-
-
 });
 
 bot.on("message", async (ctx) => {
