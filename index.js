@@ -310,8 +310,6 @@ bot.on("message", async (ctx) => {
         } else {
             await ctx.reply("❌ Error updating password.");
         }
-        
-        return;
     }
 
     // ADDING EXISTING PASSWORD
