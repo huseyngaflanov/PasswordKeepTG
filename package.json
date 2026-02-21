@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "node index.js",
+    "git:save": "git add -A && git commit",
+    "git:push": "git push",
+    "git:sync": "git pull --rebase && git push"
   },
   "author": "",
   "license": "ISC",
