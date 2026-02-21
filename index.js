@@ -1,17 +1,8 @@
 require('dotenv').config();
-const { Bot, session } = require('grammy');
+const { Bot } = require('grammy');
 const db = require('./db');
 
 const bot = new Bot(process.env.BOT_TOKEN);
-
-
-bot.use(
-    session({
-        initial: () => ({
-            requestingMaterPassword: false,
-        }),
-    })
-);
 
 bot.command("start", (ctx) => {
     const userId = ctx.from.id;
@@ -27,39 +18,16 @@ bot.command("start", (ctx) => {
             firstName,
             lastName,
             passwords: [],
-            master: ''
         });
         ctx.reply(`Hello ${firstName}!\nWelcome! Let's get started! The project is open source, therefore completely safe.\nCheck the GitHub page here: https://github.com/`);
-        ctx.session.requestingMaterPassword = true;
-        ctx.reply("Please create a master password (exactly 8 characters).");
     } else {
         // Existing user
         ctx.reply(`Welcome back, ${firstName}!`);
-        if (db.getUser(userId).master === '') {
-            ctx.session.requestingMaterPassword = true;
-            ctx.reply("Please create a master password (exactly 8 characters).");
-        }
     }
-
-
-});
-
-bot.on("message", async (ctx) => {
-    if (!ctx.session.requestingMaterPassword) return; // ignore normal messages
-
-    const password = ctx.message.text.trim();
-    ctx.deleteMessage();
-    if (password.length !== 8) {
-        await ctx.reply("Invalid. Password must be exactly 8 characters. Try again:");
-        return;
-    }
-
-    ctx.session.requestingMaterPassword = false;
-    await ctx.reply(`All set!`);
 });
 
 bot.command("new", (ctx) => {
-    console.log(ctx.message.text);
+
 });
 
 bot.command("me", (ctx) => {
