@@ -15,5 +15,8 @@ npm-debug.log*
 # Database
 /db.json
 
+# Test files
+test-db.js
+
 # IDE
 /.idea/
