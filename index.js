@@ -24,6 +24,8 @@ bot.command("start", (ctx) => {
         // Existing user
         ctx.reply(`Welcome back, ${firstName}!`);
     }
+
+
 });
 
 bot.command("new", (ctx) => {
